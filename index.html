@@ -18,41 +18,37 @@
 </head>
 
 <body>
-    <div class="container">
-        <div id="current-question"></div>
-        <div id='choices'>
-            <div id="choice-1"></div>
-            <div id="choice-2"></div>
-
-            <div id="choice-3"></div>
-
-            <div id="choice-4"></div>
-
-        </div>
-
-        <div class="card text-center">
-            <div id="display" class="card-header">
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <button id='start-game' type="button" class="btn btn-dark">Start Game</button>
-            </div>
-            <div class="card-footer text-muted">
-                2 days ago
-            </div>
-        </div>
-
-
+    <div class="jumbotron">
+        <h1>WELCOME TO THE LAND OF TRIVIA</h1>
     </div>
+    <div class="container">
 
+        <div class="box">
+            <h2 class="select-description">PLEASE SELECT A CATEGORY</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <button id='Television' class="btn btn-light" data-value=" Television">Television</button>
+                </div>
+                <div class="col-md-4">
+                    <button id='video-games' class="btn btn-light" data-value=" Video Games">Video Games</button>
+                </div>
+                <div class="col-md-4">
+                    <button id='Science: Computers' class="btn btn-light" data-value="Science: Computers">Science:
+                        Computers</button>
+                </div>
+            </div>
+            <div class="container">
+                <div class=' box display-picked'>
+                    <p>
+                        <h2 class="you-selected"></h2>
+                    </p>
+                    <button id="start" class="btn btn-warning">Start</button>
 
+                </div>
+            </div>
 
-
-
-
-
-
-
+        </div>
+    </div>
     </div>
 
 

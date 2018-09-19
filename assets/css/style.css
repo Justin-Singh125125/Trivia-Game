@@ -1,6 +1,29 @@
+*{
+    box-sizing: border-box;
+}
 body{
     text-align: center;
 }
-.modal{
-    background: red;
+.box{
+    width: 100%;
+    height: auto;
+    background: #e9ecef;
+    border: 3px solid grey;
+
+ 
+}
+.select-description{
+   border-bottom: 2px solid gray;
+   margin: 10px;
+   padding-bottom: 15px;
+}
+
+.display-picked{
+    margin-top: 125px;
+    visibility: hidden;
+    margin-bottom: 20px;   
+}
+#start{
+    width: 150px;
+    margin-bottom: 20px;
 }
