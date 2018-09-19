@@ -13,11 +13,19 @@ $(document).ready(function () {
         currentQuestion: 0,
         numOfCorrect: 0,
         numOfWrong: 0,
+        isGameOver: false,
 
 
         startClock: function () {
+            if (game.isGameOver) {
 
-            intervalId = setInterval(game.decreaseClock, 1000);
+            }
+            else {
+                intervalId = setInterval(game.decreaseClock, 1000);
+            }
+
+
+
         },
         pauseClock: function () {
             clearInterval(intervalId);
@@ -25,6 +33,7 @@ $(document).ready(function () {
 
         decreaseClock: function () {
             //writes to the game page
+
             $('#display-time-left').html(game.time + ' Seconds');
             game.time--;
         },
@@ -43,7 +52,9 @@ $(document).ready(function () {
         },
 
         callAjax: function () {
-
+            if (game.currentQuestion >= 5) {
+                game.isGameOver = true;
+            }
             $.ajax({
                 url: game.queryURL,
                 method: "GET"
@@ -52,12 +63,16 @@ $(document).ready(function () {
                 console.log(response);
 
                 DisplayTrivia(response);
+                game.currentQuestion++;
+
                 game.startClock();
 
 
 
             })
+
         },
+
 
     };
 
@@ -135,57 +150,33 @@ $(document).ready(function () {
 
 
     $('.choices-button').on('click', function () {
-        if (game.currentQuestion > 2) {
+        // checks if the button that we clicked, matches the correct answer 
+        if ($(this).text() == game.currentAnswer) {
+            //display that they got the answer correct
+            //if it does, we are going to want to reset the clock
+            //start the clock
+            //grab a new question
+
+            console.log(game.currentQuestion);
+            game.numOfCorrect++;
+            $('.modal-body').html('CORRECT');
             game.pauseClock();
-            game.resetClock();
             $('.modal').modal('show');
-            $('.modal-body').html('<p>GAME OVER!!</p>');
-            $('.modal-body').append('<p>You Got ' + game.numOfCorrect + 'Correct!<p>');
+
+            setTimeout(function () {
+                $('.modal').modal('hide');
+                game.resetClock();
+                game.callAjax();
+            }, 2000);
+
+
+
+
+
+
         }
-        else {
-            // checks if the button that we clicked, matches the correct answer 
-            if ($(this).text() == game.currentAnswer) {
-                //display that they got the answer correct
-                //if it does, we are going to want to reset the clock
-                //start the clock
-                //grab a new question
-                game.currentQuestion++;
-                game.numOfCorrect++;
-                $('.modal-body').html('CORRECT');
-                game.pauseClock();
-                $('.modal').modal('show');
-
-                setTimeout(function () {
-                    $('.modal').modal('hide');
-                    game.callAjax();
-                    game.resetClock();
-                    game.startClock();
-
-                }, 3000);
-
-            }
-            //if it does not match we are going to 
-            else {
-                //display that they got the answer wrong
-                //grab a new question
 
 
-            }
-        }
 
     })
-
-
-
-
-
-
-
-
-
-
-
-
 })
-
-

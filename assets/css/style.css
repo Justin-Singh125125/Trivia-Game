@@ -44,4 +44,8 @@ body{
 .modal-header{
     text-align: center;
 }
+#next-question{
+    display: none;
+    margin: 0 auto;
+}
 
