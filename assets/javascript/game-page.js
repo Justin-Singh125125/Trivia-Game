@@ -1,5 +1,3 @@
-
-
 $(document).ready(function () {
     var intervalId;
 
@@ -69,45 +67,5 @@ $(document).ready(function () {
     //         console.log(response);
     //     })
     // }
-    $('button').on('click', function () {
-
-        if (this.id == 'Television') {
-            $('.you-selected').html("YOU SELECTED: " + $(this).attr('data-value').toUpperCase());
-            $('.display-picked').css('visibility', 'visible');
-            game.isTeleClicked = true;
-
-
-
-        }
-        if (this.id == 'video-games') {
-            $('.you-selected').html("YOU SELECTED: " + $(this).attr('data-value').toUpperCase());
-            $('.display-picked').css('visibility', 'visible');
-            // game.callTelevision = true;
-        }
-        if (this.id == 'Science-Computers') {
-            $('.you-selected').html("YOU SELECTED: " + $(this).attr('data-value').toUpperCase());
-            $('.display-picked').css('visibility', 'visible');
-            // game.callTelevision = true;
-        }
-    })
-
-    $('#start').on('click', function () {
-        $('.hide-1').css('display', 'none');
-        $('.hide-2').css('display', 'block');
-        game.startGame();
-    })
-
-
-
-
-
-
-
-
-
-
-
 
 })
-
-

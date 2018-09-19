@@ -27,3 +27,18 @@ body{
     width: 150px;
     margin-bottom: 20px;
 }
+
+#display-time-left{
+    border-bottom: 3px solid gray;
+    
+}
+.choices-button{
+    border-radius: 20px;
+    background: #e9ecef;
+}
+
+.hide-2{
+    display: none;
+
+}
+
