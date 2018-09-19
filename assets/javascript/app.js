@@ -2,6 +2,11 @@
 
 $(document).ready(function () {
 
+    var game = {
+        start: false,
+        interval: 0,
+        time: 5,
+    };
 
     function callAjaxTelevision() {
         var queryURL = ' https://opentdb.com/api.php?amount=5&category=14&type=multiple';
@@ -39,11 +44,37 @@ $(document).ready(function () {
         })
     }
 
+
     $('button').on('click', function () {
 
         if (this.id == 'Television') {
             $('.you-selected').html("YOU SELECTED: " + $(this).attr('data-value').toUpperCase());
             $('.display-picked').css('visibility', 'visible');
+
         }
+
     })
+
+
+
+
+    function startClock() {
+        interval = setInterval(decreaseClock, 1000);
+    }
+    function decreaseClock() {
+
+        $('.test').html(game.time);
+        game.time--;
+    }
+    function startGame() {
+        startClock();
+    }
+
+    $(document).on('click', '#start', startGame());
+
+
+
+
 })
+
+
