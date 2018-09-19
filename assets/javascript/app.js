@@ -7,7 +7,9 @@ $(document).ready(function () {
         start: false,
         time: 5,
         isTeleClicked: false,
-        currentAnswer: "",
+        currentAnswer: '',
+        queryURL: '',
+        randomIndexPlacement: '',
 
 
         startClock: function () {
@@ -25,80 +27,87 @@ $(document).ready(function () {
             console.log(game.isTeleClicked);
             if (game.isTeleClicked) {
 
-                game.callAjaxTelevision();
+                game.callAjax();
             }
             game.startClock();
         },
 
-        callAjaxTelevision: function () {
-            var queryURL = 'https://opentdb.com/api.php?amount=10&category=14&type=multiple';
-            //create an ajax call
+        callAjax: function () {
+
             $.ajax({
-                url: queryURL,
+                url: game.queryURL,
                 method: "GET"
             }).then(function (response) {
 
                 console.log(response);
                 DisplayTrivia(response);
 
-                console.log()
             })
         },
+
     };
 
     function DisplayTrivia(r) {
-        $('#display-question').html(r.results[0].question);
+        //will put the correct answer at a random choice
+        game.randomIndexPlacement = Math.floor(Math.random() * 4);
 
-        $('#choice-1').append(r.results[0].incorrect_answers[0])
-        $('#choice-2').append(r.results[0].incorrect_answers[1]);
-        $('#choice-3').append(r.results[0].incorrect_answers[2]);
-        game.currentAnswer = r.results[0].correct_answer;
-        $('#choice-4').append(r.results[0].correct_answer);
+        if (game.randomIndexPlacement == 0) {
+
+            game.currentAnswer = r.results[0].correct_answer;
+
+            $('#display-question').html(r.results[0].question);
+            $('#choice-1').append(r.results[0].correct_answer)
+            $('#choice-2').append(r.results[0].incorrect_answers[1]);
+            $('#choice-3').append(r.results[0].incorrect_answers[2]);
+            $('#choice-4').append(r.results[0].incorrect_answers[2]);
+        }
+        if (game.randomIndexPlacement == 1) {
+            game.currentAnswer = r.results[0].correct_answer;
+            $('#display-question').html(r.results[0].question);
+            $('#choice-1').append(r.results[0].incorrect_answers[0])
+            $('#choice-2').append(r.results[0].correct_answer);
+            $('#choice-3').append(r.results[0].incorrect_answers[2]);
+            $('#choice-4').append(r.results[0].incorrect_answers[2]);
+        }
+        if (game.randomIndexPlacement == 2) {
+
+            game.currentAnswer = r.results[0].correct_answer;
+            $('#display-question').html(r.results[0].question);
+            $('#choice-1').append(r.results[0].incorrect_answers[0])
+            $('#choice-2').append(r.results[0].incorrect_answers[0]);
+            $('#choice-3').append(r.results[0].correct_answer);
+            $('#choice-4').append(r.results[0].incorrect_answers[2]);
+        }
+        if (game.randomIndexPlacement == 3) {
+            game.currentAnswer = r.results[0].correct_answer;
+            $('#display-question').html(r.results[0].question);
+            $('#choice-1').append(r.results[0].incorrect_answers[0])
+            $('#choice-2').append(r.results[0].incorrect_answers[0]);
+            $('#choice-3').append(r.results[0].incorrect_answers[0]);
+            $('#choice-4').append(r.results[0].correct_answer);
+        }
+
     }
 
-
-    // function callAjaxVideoGames() {
-    //     var queryURL = 'https://opentdb.com/api.php?amount=5&category=15&type=multiple';
-    //     //create an ajax call
-    //     $.ajax({
-    //         url: queryURL,
-    //         method: "GET"
-    //     }).then(function (response) {
-
-    //         console.log(response);
-    //     })
-    // }
-
-    // function callAjaxComputers() {
-    //     var queryURL = 'https://opentdb.com/api.php?amount=10&category=18&type=multiple';
-    //     //create an ajax call
-    //     $.ajax({
-    //         url: queryURL,
-    //         method: "GET"
-    //     }).then(function (response) {
-
-    //         console.log(response);
-    //     })
-    // }
     $('button').on('click', function () {
 
         if (this.id == 'Television') {
             $('.you-selected').html("YOU SELECTED: " + $(this).attr('data-value').toUpperCase());
             $('.display-picked').css('visibility', 'visible');
+            game.queryURL = 'https://opentdb.com/api.php?amount=10&category=14&type=multiple';
             game.isTeleClicked = true;
-
-
-
         }
         if (this.id == 'video-games') {
             $('.you-selected').html("YOU SELECTED: " + $(this).attr('data-value').toUpperCase());
             $('.display-picked').css('visibility', 'visible');
-            // game.callTelevision = true;
+            game.isTeleClicked = true;
+            game.queryURL = 'https://opentdb.com/api.php?amount=5&category=15&type=multiple';
         }
         if (this.id == 'Science-Computers') {
             $('.you-selected').html("YOU SELECTED: " + $(this).attr('data-value').toUpperCase());
             $('.display-picked').css('visibility', 'visible');
-            // game.callTelevision = true;
+            game.isTeleClicked = true;
+            game.queryURL = 'https://opentdb.com/api.php?amount=10&category=18&type=multiple';
         }
     })
 
