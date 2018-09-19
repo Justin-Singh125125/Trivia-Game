@@ -7,6 +7,7 @@ $(document).ready(function () {
         start: false,
         time: 5,
         isTeleClicked: false,
+        currentAnswer: "",
 
 
         startClock: function () {
@@ -38,12 +39,22 @@ $(document).ready(function () {
             }).then(function (response) {
 
                 console.log(response);
+                DisplayTrivia(response);
+
+                console.log()
             })
         },
     };
 
+    function DisplayTrivia(r) {
+        $('#display-question').html(r.results[0].question);
 
-
+        $('#choice-1').append(r.results[0].incorrect_answers[0])
+        $('#choice-2').append(r.results[0].incorrect_answers[1]);
+        $('#choice-3').append(r.results[0].incorrect_answers[2]);
+        game.currentAnswer = r.results[0].correct_answer;
+        $('#choice-4').append(r.results[0].correct_answer);
+    }
 
 
     // function callAjaxVideoGames() {
@@ -95,6 +106,12 @@ $(document).ready(function () {
         $('.hide-1').css('display', 'none');
         $('.hide-2').css('display', 'block');
         game.startGame();
+    })
+
+    $('.choices-button').on('click', function () {
+        if ($(this).text() == game.currentAnswer) {
+            alert('That right!');
+        }
     })
 
 
