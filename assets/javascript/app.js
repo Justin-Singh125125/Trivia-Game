@@ -3,6 +3,31 @@
 $(document).ready(function () {
     var intervalId;
 
+    var mainMusic = document.getElementById('main-music');
+    var winningSound = document.getElementById('winning-sound');
+    var losingSound = document.getElementById('losing-sound');
+    mainMusic.src = './assets/sounds/main-music.wav';
+    winningSound.src = './assets/sounds/winningSound.wav';
+    losingSound.src = './assets/sounds/losingSound.wav';
+
+    function playLosingSound() {
+        losingSound.play();
+    }
+    function playWinningSound() {
+        winningSound.play();
+    }
+
+    function playMainMusic() {
+        mainMusic.src = '';
+        mainMusic.src = './assets/sounds/main-music.wav';
+        mainMusic.play();
+    }
+    function stopMainMusic() {
+        mainMusic.pause();
+    }
+
+
+
     var game = {
         start: false,
         time: 30,
@@ -17,7 +42,7 @@ $(document).ready(function () {
 
         reset: function () {
             game.start = false;
-            game.time = 5;
+            game.time = 30;
 
             game.currentAnswer = '';
             game.randomIndexPlacement = 0;
@@ -53,10 +78,15 @@ $(document).ready(function () {
 
         decreaseClock: function () {
             //writes to the game page
-            if (game.time <= 0) {
+            if (game.time < 0) {
                 $('.modal-body').html('Time\'s up!')
                 $('.modal').modal('show');
-                setTimeout(game.hideModal, 3000);
+                stopMainMusic();
+                game.pauseClock();
+                setTimeout(function () {
+                    game.hideModal();
+                    game.callAjax();
+                }, 3000);
             }
             else {
                 $('#display-time-left').html(game.time + ' Seconds');
@@ -80,7 +110,7 @@ $(document).ready(function () {
         },
 
         callAjax: function () {
-            if (game.currentQuestion >= 2) {
+            if (game.currentQuestion >= 10) {
                 setTimeout(function () {
                     game.gameOver();
                 }, 1000);
@@ -93,9 +123,9 @@ $(document).ready(function () {
                 }).then(function (response) {
                     displayTrivia(response);
                     game.currentQuestion++;
-                    game.pauseClock();
                     game.resetClock();
                     game.startClock();
+                    playMainMusic();
                 })
 
             }
@@ -151,6 +181,7 @@ $(document).ready(function () {
 
     $('button').on('click', function () {
 
+
         if (this.id == 'Television') {
             $('.you-selected').html("YOU SELECTED: " + $(this).attr('data-value').toUpperCase());
             $('.display-picked').css('visibility', 'visible');
@@ -173,6 +204,7 @@ $(document).ready(function () {
 
     $('#start').on('click', function () {
         game.startGame();
+
     })
 
 
@@ -188,6 +220,8 @@ $(document).ready(function () {
             game.pauseClock();
             $('.modal-body').html('CORRECT');
             $('.modal').modal('show');
+            stopMainMusic();
+            playWinningSound();
             setTimeout(function () {
                 game.hideModal();
                 game.callAjax();
@@ -198,6 +232,8 @@ $(document).ready(function () {
         else {
             game.numOfWrong++;
             game.pauseClock();
+            stopMainMusic();
+            playLosingSound();
             $('.modal-body').html('WRONG ANSWER!');
             $('.modal').modal('show');
             setTimeout(function () {
