@@ -15,12 +15,39 @@ $(document).ready(function () {
         numOfWrong: 0,
         isGameOver: false,
 
+        reset: function () {
+            console.log('inside reset');
+            game.start = false;
+            game.time = 5;
+            game.isTeleClicked = false;
+            game.currentAnswer = '';
+            game.randomIndexPlacement = 0;
+            game.currentQuestion = 0;
+            game.numOfCorrect = 0;
+            game.numOfWrong = 0;
+            game.isGameOver = false;
+            game.reset();
 
+        },
+        hideModal: function () {
+            $('.modal').modal('hide');
+            $('.hide-2').css('display', 'none');
+            $('.hide-1').css('display', 'block');
+
+        },
         startClock: function () {
             if (game.isGameOver) {
+                game.pauseClock();
+                game.resetClock();
+                $('.modal').modal('show');
+                $('.modal-body').html('GAME-OVER');
+                setTimeout(game.hideModal, 3000);
+
+
 
             }
             else {
+                game.callAjax();
                 intervalId = setInterval(game.decreaseClock, 1000);
             }
 
@@ -42,7 +69,8 @@ $(document).ready(function () {
             console.log(game.isTeleClicked);
             //if one of the categories was clicked, load the correct AJAX
             if (game.isTeleClicked) {
-                game.callAjax();
+                game.startClock();
+                game.isGameOver = false;
             }
 
         },
@@ -52,23 +80,18 @@ $(document).ready(function () {
         },
 
         callAjax: function () {
-            if (game.currentQuestion >= 5) {
+            if (game.currentQuestion >= 2) {
                 game.isGameOver = true;
+                //we call this function right away so we can stop the program
+                game.startClock();
             }
             $.ajax({
                 url: game.queryURL,
                 method: "GET"
             }).then(function (response) {
-
                 console.log(response);
-
                 DisplayTrivia(response);
                 game.currentQuestion++;
-
-                game.startClock();
-
-
-
             })
 
         },
@@ -165,8 +188,9 @@ $(document).ready(function () {
 
             setTimeout(function () {
                 $('.modal').modal('hide');
+                game.pauseClock();
                 game.resetClock();
-                game.callAjax();
+                game.startClock();
             }, 2000);
 
 
