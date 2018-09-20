@@ -5,8 +5,8 @@ $(document).ready(function () {
 
     var game = {
         start: false,
-        time: 5,
-        isTeleClicked: false,
+        time: 30,
+
         currentAnswer: '',
         queryURL: '',
         randomIndexPlacement: 0,
@@ -16,43 +16,31 @@ $(document).ready(function () {
         isGameOver: false,
 
         reset: function () {
-            console.log('inside reset');
             game.start = false;
             game.time = 5;
-            game.isTeleClicked = false;
+
             game.currentAnswer = '';
             game.randomIndexPlacement = 0;
             game.currentQuestion = 0;
             game.numOfCorrect = 0;
             game.numOfWrong = 0;
             game.isGameOver = false;
-            game.reset();
 
+        },
+
+        gameOver: function () {
+
+            $('.modal-body').html('GAME OVER!');
+            setTimeout(game.hideModal, 3000);
+            $('.hide-2').css('display', 'none');
+            $('.hide-1').css('display', 'block');
+            game.reset();
         },
         hideModal: function () {
             $('.modal').modal('hide');
-            $('.hide-2').css('display', 'none');
-            $('.hide-1').css('display', 'block');
-
         },
         startClock: function () {
-            if (game.isGameOver) {
-                game.pauseClock();
-                game.resetClock();
-                $('.modal').modal('show');
-                $('.modal-body').html('GAME-OVER');
-                setTimeout(game.hideModal, 3000);
-
-
-
-            }
-            else {
-                game.callAjax();
-                intervalId = setInterval(game.decreaseClock, 1000);
-            }
-
-
-
+            intervalId = setInterval(game.decreaseClock, 1000);
         },
         pauseClock: function () {
             clearInterval(intervalId);
@@ -60,46 +48,56 @@ $(document).ready(function () {
 
         decreaseClock: function () {
             //writes to the game page
+            if (game.time <= 0) {
+                $('.modal-body').html('Time\'s up!')
+                $('.modal').modal('show');
+                setTimeout(game.hideModal, 3000);
+            }
+            else {
+                $('#display-time-left').html(game.time + ' Seconds');
+                game.time--;
+            }
 
-            $('#display-time-left').html(game.time + ' Seconds');
-            game.time--;
         },
         startGame: function () {
-            //could use this for something later
-            console.log(game.isTeleClicked);
-            //if one of the categories was clicked, load the correct AJAX
-            if (game.isTeleClicked) {
-                game.startClock();
-                game.isGameOver = false;
-            }
+            //changes the page to the game page
+            $('.hide-1').css('display', 'none');
+            $('.hide-2').css('display', 'block');
+
+            //calls ajax to get question
+            game.callAjax();
 
         },
         resetClock: function () {
             clearInterval(intervalId);
-            game.time = 5;
+            game.time = 30;
+
         },
 
         callAjax: function () {
             if (game.currentQuestion >= 2) {
-                game.isGameOver = true;
-                //we call this function right away so we can stop the program
-                game.startClock();
+                game.gameOver();
             }
-            $.ajax({
-                url: game.queryURL,
-                method: "GET"
-            }).then(function (response) {
-                console.log(response);
-                DisplayTrivia(response);
-                game.currentQuestion++;
-            })
+            else {
+                $.ajax({
+                    url: game.queryURL,
+                    method: "GET"
+                }).then(function (response) {
+                    displayTrivia(response);
+                    game.currentQuestion++;
+                    game.pauseClock();
+                    game.resetClock();
+                    game.startClock();
+                })
+
+            }
 
         },
 
 
     };
 
-    function DisplayTrivia(r) {
+    function displayTrivia(r) {
         //will put the correct answer at a random choice
         //this will ensure questions are never the same
         game.randomIndexPlacement = Math.floor(Math.random() * 4);
@@ -149,25 +147,23 @@ $(document).ready(function () {
             $('.you-selected').html("YOU SELECTED: " + $(this).attr('data-value').toUpperCase());
             $('.display-picked').css('visibility', 'visible');
             game.queryURL = 'https://opentdb.com/api.php?amount=10&category=14&type=multiple';
-            game.isTeleClicked = true;
+
         }
         if (this.id == 'video-games') {
             $('.you-selected').html("YOU SELECTED: " + $(this).attr('data-value').toUpperCase());
             $('.display-picked').css('visibility', 'visible');
-            game.isTeleClicked = true;
+
             game.queryURL = 'https://opentdb.com/api.php?amount=10&category=15&type=multiple';
         }
         if (this.id == 'Science-Computers') {
             $('.you-selected').html("YOU SELECTED: " + $(this).attr('data-value').toUpperCase());
             $('.display-picked').css('visibility', 'visible');
-            game.isTeleClicked = true;
+
             game.queryURL = 'https://opentdb.com/api.php?amount=10&category=18&type=multiple';
         }
     })
 
     $('#start').on('click', function () {
-        $('.hide-1').css('display', 'none');
-        $('.hide-2').css('display', 'block');
         game.startGame();
     })
 
@@ -180,22 +176,20 @@ $(document).ready(function () {
             //start the clock
             //grab a new question
 
-            console.log(game.currentQuestion);
             game.numOfCorrect++;
-            $('.modal-body').html('CORRECT');
             game.pauseClock();
+            $('.modal-body').html('CORRECT');
             $('.modal').modal('show');
-
-            setTimeout(function () {
-                $('.modal').modal('hide');
-                game.pauseClock();
-                game.resetClock();
-                game.startClock();
-            }, 2000);
-
-
-
-
+            setTimeout(game.hideModal, 3000);
+            game.callAjax();
+        }
+        else {
+            game.numOfWrong++;
+            game.pauseClock();
+            $('.modal-body').html('WRONG ANSWER!');
+            $('.modal').modal('show');
+            setTimeout(game.hideModal, 3000);
+            game.callAjax();
 
 
         }
