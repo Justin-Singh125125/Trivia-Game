@@ -30,8 +30,13 @@ $(document).ready(function () {
 
         gameOver: function () {
 
-            $('.modal-body').html('GAME OVER!');
-            setTimeout(game.hideModal, 3000);
+            $('.modal-body').html('<p>GAME OVER!</p>');
+            $('.modal-body').append('<p>Total Questions: ' + game.currentQuestion + '</p>');
+            $('.modal-body').append('<p>Guesse\'s Correct: ' + game.numOfCorrect + '</p>');
+            $('.modal-body').append('<p>Guesse\'s Incorrect: ' + game.numOfWrong + '</p>');
+            $('.modal').modal('show');
+            setTimeout(game.hideModal, 8000);
+
             $('.hide-2').css('display', 'none');
             $('.hide-1').css('display', 'block');
             game.reset();
@@ -76,7 +81,10 @@ $(document).ready(function () {
 
         callAjax: function () {
             if (game.currentQuestion >= 2) {
-                game.gameOver();
+                setTimeout(function () {
+                    game.gameOver();
+                }, 1000);
+
             }
             else {
                 $.ajax({
@@ -180,16 +188,23 @@ $(document).ready(function () {
             game.pauseClock();
             $('.modal-body').html('CORRECT');
             $('.modal').modal('show');
-            setTimeout(game.hideModal, 3000);
-            game.callAjax();
+            setTimeout(function () {
+                game.hideModal();
+                game.callAjax();
+            }, 3000);
+
+
         }
         else {
             game.numOfWrong++;
             game.pauseClock();
             $('.modal-body').html('WRONG ANSWER!');
             $('.modal').modal('show');
-            setTimeout(game.hideModal, 3000);
-            game.callAjax();
+            setTimeout(function () {
+                game.hideModal();
+                game.callAjax();
+            }, 3000);
+
 
 
         }
