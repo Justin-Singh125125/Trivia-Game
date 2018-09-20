@@ -62,8 +62,10 @@ body{
     margin: 0 auto;
 }
 .jumbotron{
-    padding: 2rem 1rem;
+    padding: 3rem 2rem;
+    background: url('../images/gaming-pattern.png');
 }
 #display-time-left{
     padding: 20px;
+    margin: 10px;
 }
