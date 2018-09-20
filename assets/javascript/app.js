@@ -39,6 +39,7 @@ $(document).ready(function () {
         numOfCorrect: 0,
         numOfWrong: 0,
         isGameOver: false,
+        questionIndex: 0,
 
         reset: function () {
             game.start = false;
@@ -50,6 +51,7 @@ $(document).ready(function () {
             game.numOfCorrect = 0;
             game.numOfWrong = 0;
             game.isGameOver = false;
+            game.questionIndex = 0;
 
         },
 
@@ -122,6 +124,7 @@ $(document).ready(function () {
                     method: "GET"
                 }).then(function (response) {
                     displayTrivia(response);
+                    game.questionIndex++;
                     game.currentQuestion++;
                     game.resetClock();
                     game.startClock();
@@ -139,41 +142,41 @@ $(document).ready(function () {
         //will put the correct answer at a random choice
         //this will ensure questions are never the same
         game.randomIndexPlacement = Math.floor(Math.random() * 4);
-
+        console.log(game.questionIndex);
         if (game.randomIndexPlacement == 0) {
 
-            game.currentAnswer = r.results[0].correct_answer;
+            game.currentAnswer = r.results[game.questionIndex].correct_answer;
 
-            $('#display-question').html(r.results[0].question);
+            $('#display-question').html(r.results[game.questionIndex].question);
             $('#choice-1').html(game.currentAnswer)
-            $('#choice-2').html(r.results[0].incorrect_answers[0]);
-            $('#choice-3').html(r.results[0].incorrect_answers[1]);
-            $('#choice-4').html(r.results[0].incorrect_answers[2]);
+            $('#choice-2').html(r.results[game.questionIndex].incorrect_answers[0]);
+            $('#choice-3').html(r.results[game.questionIndex].incorrect_answers[1]);
+            $('#choice-4').html(r.results[game.questionIndex].incorrect_answers[2]);
         }
         if (game.randomIndexPlacement == 1) {
 
-            game.currentAnswer = r.results[0].correct_answer;
-            $('#display-question').html(r.results[0].question);
-            $('#choice-1').html(r.results[0].incorrect_answers[0])
+            game.currentAnswer = r.results[game.questionIndex].correct_answer;
+            $('#display-question').html(r.results[game.questionIndex].question);
+            $('#choice-1').html(r.results[game.questionIndex].incorrect_answers[0])
             $('#choice-2').html(game.currentAnswer);
-            $('#choice-3').html(r.results[0].incorrect_answers[1]);
-            $('#choice-4').html(r.results[0].incorrect_answers[2]);
+            $('#choice-3').html(r.results[game.questionIndex].incorrect_answers[1]);
+            $('#choice-4').html(r.results[game.questionIndex].incorrect_answers[2]);
         }
         if (game.randomIndexPlacement == 2) {
 
-            game.currentAnswer = r.results[0].correct_answer;
-            $('#display-question').html(r.results[0].question);
-            $('#choice-1').html(r.results[0].incorrect_answers[0])
-            $('#choice-2').html(r.results[0].incorrect_answers[1]);
+            game.currentAnswer = r.results[game.questionIndex].correct_answer;
+            $('#display-question').html(r.results[game.questionIndex].question);
+            $('#choice-1').html(r.results[game.questionIndex].incorrect_answers[0])
+            $('#choice-2').html(r.results[game.questionIndex].incorrect_answers[1]);
             $('#choice-3').html(game.currentAnswer);
-            $('#choice-4').html(r.results[0].incorrect_answers[2]);
+            $('#choice-4').html(r.results[game.questionIndex].incorrect_answers[2]);
         }
         if (game.randomIndexPlacement == 3) {
-            game.currentAnswer = r.results[0].correct_answer;
-            $('#display-question').html(r.results[0].question);
-            $('#choice-1').html(r.results[0].incorrect_answers[0])
-            $('#choice-2').html(r.results[0].incorrect_answers[1]);
-            $('#choice-3').html(r.results[0].incorrect_answers[2]);
+            game.currentAnswer = r.results[game.questionIndex].correct_answer;
+            $('#display-question').html(r.results[game.questionIndex].question);
+            $('#choice-1').html(r.results[game.questionIndex].incorrect_answers[0])
+            $('#choice-2').html(r.results[game.questionIndex].incorrect_answers[1]);
+            $('#choice-3').html(r.results[game.questionIndex].incorrect_answers[2]);
             $('#choice-4').html(game.currentAnswer);
         }
 

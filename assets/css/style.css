@@ -1,14 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
 *{
     box-sizing: border-box;
+  
 }
 body{
     text-align: center;
+    background: url('../images/background.jpg');
+    font-family: 'Raleway', sans-serif;
 }
 .box{
     width: 100%;
-    height: auto;
+    height: 450px;
     background: #e9ecef;
     border: 3px solid grey;
+    margin-top: 60px;
+    border-radius: 10px;
 
  
 }
@@ -21,7 +27,8 @@ body{
 .display-picked{
     margin-top: 125px;
     visibility: hidden;
-    margin-bottom: 20px;   
+    margin-bottom: 20px;  
+    height: auto 
 }
 #start{
     width: 150px;
@@ -35,6 +42,12 @@ body{
 .choices-button{
     border-radius: 20px;
     background: #e9ecef;
+    width: 40%;
+    margin: 20px;
+    padding: 20px;
+}
+.choices-button:hover{
+    background: #8ac9d6;
 }
 
 .hide-2{
@@ -48,4 +61,9 @@ body{
     display: none;
     margin: 0 auto;
 }
-
+.jumbotron{
+    padding: 2rem 1rem;
+}
+#display-time-left{
+    padding: 20px;
+}
