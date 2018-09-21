@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 *{
     box-sizing: border-box;
-  
 }
 body{
     text-align: center;
@@ -11,12 +10,10 @@ body{
 .box{
     width: 100%;
     height: 450px;
-    background: #e9ecef;
+    background: #fff;
     border: 3px solid grey;
     margin-top: 60px;
     border-radius: 10px;
-
- 
 }
 .select-description{
    border-bottom: 2px solid gray;
@@ -34,6 +31,9 @@ body{
     width: 150px;
     margin-bottom: 20px;
 }
+#start:hover{
+    border: 2px solid yellow;
+}
 
 #display-time-left{
     border-bottom: 3px solid gray;
@@ -41,13 +41,12 @@ body{
 }
 .choices-button{
     border-radius: 20px;
-    background: #e9ecef;
     width: 40%;
     margin: 20px;
     padding: 20px;
 }
 .choices-button:hover{
-    background: #8ac9d6;
+    border: 2px solid gray;
 }
 
 .hide-2{
@@ -68,4 +67,11 @@ body{
 #display-time-left{
     padding: 20px;
     margin: 10px;
+}
+.btn:hover{
+ border: 2px solid grey;
+}
+.modal-body{
+    border: 2px solid black;
+    background: azure;
 }

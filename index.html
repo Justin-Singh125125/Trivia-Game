@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/style.css">
-
     <!-- javascript link -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -23,14 +21,11 @@
 </head>
 
 <body>
-
     <div class="hide-1">
-
         <div class="jumbotron">
             <h1>WELCOME TO THE LAND OF TRIVIA</h1>
         </div>
         <div class="container">
-
             <div class="box">
                 <h2 class="select-description">PLEASE SELECT A CATEGORY</h2>
                 <div class="row">
@@ -50,18 +45,14 @@
                         <p>
                             <h2 class="you-selected"></h2>
                         </p>
-
                         <button id="start" class="btn btn-warning">
                             Start
                         </button>
-
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="hide-2">
         <div class="jumbotron">
             <h1 id="display-question"></h1>
@@ -71,46 +62,38 @@
                 <h2 id="display-time-left"></h2>
                 <div class="row">
                     <div class="col-md-6">
-                        <button id='choice-1' class="choices-button"></button>
+                        <button id='choice-1' class="choices-button btn-light"></button>
                     </div>
                     <div class="col-md-6">
-                        <button id='choice-2' class="choices-button"></button>
+                        <button id='choice-2' class="choices-button btn-light"></button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <button id='choice-3' class="choices-button"></button>
+                        <button id='choice-3' class="choices-button btn-light"></button>
                     </div>
                     <div class="col-md-6">
-                        <button id='choice-4' class="choices-button"></button>
+                        <button id='choice-4' class="choices-button btn-light"></button>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
-
-
     <!-- Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-
                 <div class="modal-body">
                 </div>
             </div>
         </div>
     </div>
 </body>
-
-
-
 <audio id="main-music" src="" type=audio></audio>
 <audio id="winning-sound" src="" type=audio></audio>
 <audio id="losing-sound" src="" type=audio></audio>
-
+<audio id="out-of-time-sound" src="" type=audio></audio>
 </body>
 
 </html>
