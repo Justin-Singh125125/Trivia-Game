@@ -90,7 +90,7 @@ $(document).ready(function () {
             //if time < 0
             if (game.time < 0) {
                 $('.modal-body').html('<p>Time\'s up!</p>');
-                $('.modal-body').append('<p>The correct answer was ' + game.currentAnswer + '.</p>');
+                $('.modal-body').append('<p>The correct answer was "' + game.currentAnswer + '".</p>');
                 $('.modal').modal('show');
                 stopMainMusic();
                 game.pauseClock();
@@ -206,7 +206,7 @@ $(document).ready(function () {
         if ($(this).text() == game.currentAnswer) {
             game.numOfCorrect++;
             game.pauseClock();
-            $('.modal-body').html('CORRECT');
+            $('.modal-body').html('<p>CORRECT</p>');
             $('.modal').modal('show');
             stopMainMusic();
             playWinningSound();
@@ -221,8 +221,8 @@ $(document).ready(function () {
             game.pauseClock();
             stopMainMusic();
             playLosingSound();
-            $('.modal-body').html('WRONG ANSWER!');
-            $('.modal-body').append('<p>The correct answer was ' + game.currentAnswer + '.</p>');
+            $('.modal-body').html('<p>WRONG ANSWER!</p>');
+            $('.modal-body').append('<p>The correct answer was "' + game.currentAnswer + '".</p>');
             $('.modal').modal('show');
             //so the user can see the modal if they lose
             setTimeout(function () {
